@@ -8,4 +8,8 @@ package com.example.wxdemo.util;
 public class TokenUtils {
 
 
+    public static String getAccessTokenStr(String secret){
+        String result = "";
+        return result;
+    }
 }

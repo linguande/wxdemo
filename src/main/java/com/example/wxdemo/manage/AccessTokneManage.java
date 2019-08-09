@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AccessTokneManage {
     private volatile static ConcurrentHashMap<String,AccessToken> map = new ConcurrentHashMap<String,AccessToken>();
 
-    @Value("corpsecret")
+    @Value("${corpsecret}")
     private static String secret;
 
     private AccessTokneManage(){
