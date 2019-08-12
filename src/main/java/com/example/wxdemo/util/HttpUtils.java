@@ -16,11 +16,6 @@ import java.io.IOException;
  **/
 public class HttpUtils {
 
-    @Value("${corpid}")
-    private static String corpid;
-
-    @Value("${corpsecret}")
-    private static String corpsecret;
 
     public static String sendPost(String url, RequestBody requestBody) throws IOException {
         Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -36,17 +31,5 @@ public class HttpUtils {
         return response.body().string();
     }
 
-    public static String getAccessTokenStr(String secret){
-        if(StringUtils.isBlank(secret)){
-            secret = corpsecret;
-        }
-        String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid="+corpid+"&corpsecret="+secret;
-        String result = "";
-        try {
-            result = sendGet(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 }

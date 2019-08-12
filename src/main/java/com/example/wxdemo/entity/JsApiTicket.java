@@ -6,16 +6,15 @@ import lombok.Setter;
 /**
  * @description:
  * @author: linguande
- * @create: 2019-08-09 16:52
+ * @create: 2019-08-12 14:42
  **/
 @Getter
 @Setter
-public class AccessToken extends BaseEntity{
+public class JsApiTicket extends BaseEntity {
 
-    private String access_token;
+    private String ticket;
 
     private int expires_in;
 
     private int createTime;
-
 }
