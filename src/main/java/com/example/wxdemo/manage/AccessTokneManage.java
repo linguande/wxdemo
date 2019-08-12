@@ -17,27 +17,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AccessTokneManage {
     private volatile static ConcurrentHashMap<String, AccessToken> map = new ConcurrentHashMap<String, AccessToken>();
 
-    @Value("${corpsecret}")
-    private static String secret;
-
     private AccessTokneManage() {
 
-    }
-
-    public static AccessToken getAccessToken() throws IOException {
-        return getAccessToken(secret);
     }
 
 
     /**
      * 根据应用secret来获取对应的access_token
      **/
-    public static AccessToken getAccessToken(String secret) throws IOException {
+    public static AccessToken getAccessToken(String secret,String corpid) throws IOException {
         AccessToken accessToken = map.get(secret);
         if (accessToken == null) {
             synchronized (AccessTokneManage.class) {
                 if (accessToken == null) {
-                    accessToken = TokenUtils.getAccessTokenStr(secret);
+                    accessToken = TokenUtils.getAccessTokenStr(secret,corpid);
                     map.put(secret, accessToken);
                 }
             }

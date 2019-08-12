@@ -15,16 +15,7 @@ import java.io.IOException;
  **/
 public class TokenUtils {
 
-    @Value("${corpid}")
-    private static String corpid;
-
-    @Value("${corpsecret}")
-    private static String corpsecret;
-
-    public static AccessToken getAccessTokenStr(String secret) throws IOException {
-        if (StringUtils.isBlank(secret)) {
-            secret = corpsecret;
-        }
+    public static AccessToken getAccessTokenStr(String secret,String corpid) throws IOException {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=" + corpid + "&corpsecret=" + secret;
         String result = HttpUtils.sendGet(url);
         AccessToken accessToken = (AccessToken) JSON.parse(result);

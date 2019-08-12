@@ -5,7 +5,6 @@ import com.example.wxdemo.manage.AccessTokneManage;
 import com.example.wxdemo.util.TokenUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +22,17 @@ import java.util.UUID;
 public class templatesController {
 
     @Value("${corpid}")
-    private static String corpid;
+    private String corpid;
 
-    @RequestMapping("/index")
+    @Value("${corpsecret}")
+    private String corpsecret;
+
+
+    @RequestMapping("/getLocation")
     public String toIndex(HttpServletRequest request, Model model) throws IOException {
 
-        JsApiTicket jsApiTicket = TokenUtils.getJsApiTicket(AccessTokneManage.getAccessToken().getAccess_token());
+        JsApiTicket jsApiTicket = TokenUtils.getJsApiTicket(AccessTokneManage.getAccessToken(corpsecret,corpid)
+                .getAccess_token());
         String jsapi_ticket = jsApiTicket.getTicket();
         //获取签名signature
         String noncestr = UUID.randomUUID().toString();
@@ -46,6 +50,6 @@ public class templatesController {
         model.addAttribute("timestamp", timestamp);
         model.addAttribute("noncestr", noncestr);
         model.addAttribute("appId", corpid);
-        return "index";
+        return "location";
     }
 }
