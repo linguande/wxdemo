@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.UUID;
@@ -37,15 +36,24 @@ public class templatesController {
         //获取签名signature
         String noncestr = UUID.randomUUID().toString();
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
-        //获取请求url
-        String path = request.getContextPath();
 
-        String url = request.getScheme() + "://" + request.getServerName() + path + "/";
+
+        String url = request.getScheme() //当前链接使用的协议
+                +"://" + request.getServerName()//服务器地址
+                + ":" + request.getServerPort() //端口号
+                + request.getContextPath() //应用名称，如果应用名称为
+                + request.getServletPath();//请求的相对url
         String str = "jsapi_ticket=" + jsapi_ticket +
                 "&noncestr=" + noncestr +
                 "&timestamp=" + timestamp +
                 "&url=" + url;
+        System.out.println("jsapi_ticket:"+jsapi_ticket);
+        System.out.println("noncestr:"+noncestr);
+        System.out.println("timestamp:"+timestamp);
+        System.out.println("url:"+url);
+        System.out.println("str:"+str);
         String signature = DigestUtils.sha1Hex(str);
+        System.out.println("signature:"+signature);
         model.addAttribute("signature", signature);
         model.addAttribute("timestamp", timestamp);
         model.addAttribute("noncestr", noncestr);

@@ -18,7 +18,7 @@ public class TokenUtils {
     public static AccessToken getAccessTokenStr(String secret,String corpid) throws IOException {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=" + corpid + "&corpsecret=" + secret;
         String result = HttpUtils.sendGet(url);
-        AccessToken accessToken = (AccessToken) JSON.parse(result);
+        AccessToken accessToken = JSON.parseObject(result,AccessToken.class);
         return accessToken;
     }
 
@@ -26,7 +26,7 @@ public class TokenUtils {
     public static JsApiTicket getJsApiTicket(String accessToken) throws IOException {
         String url ="https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token="+accessToken;
         String result = HttpUtils.sendGet(url);
-        JsApiTicket jsApiTicket =(JsApiTicket) JSON.parse(result);
+        JsApiTicket jsApiTicket = JSON.parseObject(result,JsApiTicket.class);
         return jsApiTicket;
     }
 }
